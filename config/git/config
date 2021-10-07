@@ -1,13 +1,13 @@
 [user]
-	name = Lars Kappert
-	email = lars@webpro.nl
+	name = Aaric Pittman
+	email = aaricpittman@gmail.com
 
 [github]
-	user = webpro
+	user = aaricpittman
 
 [core]
 	excludesfile = ~/.config/git/ignore
-	editor = code --wait
+	editor = vim
 	filemode = false
 	trustctime = false
 	autocrlf = input

@@ -16,20 +16,10 @@ all: $(OS)
 
 macos: sudo core-macos packages link duti
 
-linux: core-linux link
-
-core-macos: brew bash git npm
-
-core-linux:
-	apt-get update
-	apt-get upgrade -y
-	apt-get dist-upgrade -f
+core-macos: zsh brew git languages
 
 stow-macos: brew
 	is-executable stow || brew install stow
-
-stow-linux: core-linux
-	is-executable stow || apt-get -y install stow
 
 sudo:
 ifndef GITHUB_ACTION
@@ -55,26 +45,28 @@ unlink: stow-$(OS)
 brew:
 	is-executable brew || curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash
 
-bash: brew
-ifdef GITHUB_ACTION
-	if ! grep -q bash $(SHELLS); then \
-		brew install bash bash-completion@2 pcre && \
-		sudo append bash $(SHELLS) && \
-		sudo chsh -s bash; \
-	fi
-else
-	if ! grep -q bash $(SHELLS); then \
-		brew install bash bash-completion@2 pcre && \
-		sudo append bash $(SHELLS) && \
-		chsh -s bash; \
-	fi
-endif
+zsh:
+	chsh -s /bin/zsh
+
+ohmyzsh:
+	sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 git: brew
 	brew install git git-extras
 
-npm: brew-packages
-	n install lts
+languages: brew-packages nodejs ruby
+
+nodejs:
+	asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+	asdf install nodejs latest
+	asdf global nodejs latest
+	npm install -g npm@latest
+
+ruby:
+	asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git
+	asdf install ruby latest
+	asdf global ruby latest
+	gem install bundler
 
 brew-packages: brew
 	brew bundle --file=$(DOTFILES_DIR)/install/Brewfile || true
@@ -87,13 +79,4 @@ vscode-extensions: cask-apps
 	for EXT in $$(cat install/Codefile); do code --install-extension $$EXT; done
 
 node-packages: npm
-	$(N_PREFIX)/bin/npm install -g $(shell cat install/npmfile)
-
-rust-packages: brew-packages
-	cargo install $(shell cat install/Rustfile)
-
-duti:
-	duti -v $(DOTFILES_DIR)/install/duti
-
-test:
-	bats test
+	eval $$(fnm env); npm install -g $(shell cat install/npmfile)
