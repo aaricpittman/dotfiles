@@ -57,13 +57,13 @@ git: brew
 languages: brew-packages nodejs ruby
 
 nodejs:
-	asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+	asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git || true
 	asdf install nodejs latest
 	asdf global nodejs latest
 	npm install -g npm@latest
 
 ruby:
-	asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git
+	asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git || true
 	asdf install ruby latest
 	asdf global ruby latest
 	gem install bundler
