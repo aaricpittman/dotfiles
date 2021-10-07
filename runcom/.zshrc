@@ -21,8 +21,8 @@ PATH="$DOTFILES_DIR/bin:$PATH"
 
 # Source the dotfiles (order matters)
 
-for DOTFILE in "$DOTFILES_DIR"/system/.{function,function_*,n,path,env,exports,alias,grep,prompt,completion,fix,zoxide}; do
-  . "$DOTFILE"
+for DOTFILE in "$DOTFILES_DIR"/system/.{asdf,function,function_*,n,path,env,exports,alias,fnm,grep,prompt,completion,fix,zoxide,custom}; do
+  [ -f "$DOTFILE" ] && . "$DOTFILE"
 done
 
 if is-macos; then
