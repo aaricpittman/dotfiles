@@ -12,20 +12,10 @@ all: $(OS)
 
 macos: sudo core-macos packages link
 
-linux: core-linux link
-
-core-macos: brew bash git npm ruby
-
-core-linux:
-	apt-get update
-	apt-get upgrade -y
-	apt-get dist-upgrade -f
+core-macos: zsh brew git asdf
 
 stow-macos: brew
 	is-executable stow || brew install stow
-
-stow-linux: core-linux
-	is-executable stow || apt-get -y install stow
 
 sudo:
 ifndef GITHUB_ACTION
@@ -51,31 +41,15 @@ unlink: stow-$(OS)
 brew:
 	is-executable brew || curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash
 
-bash: BASH=/usr/local/bin/bash
-bash: SHELLS=/private/etc/shells
-bash: brew
-ifdef GITHUB_ACTION
-	if ! grep -q $(BASH) $(SHELLS); then \
-		brew install bash bash-completion@2 pcre && \
-		sudo append $(BASH) $(SHELLS) && \
-		sudo chsh -s $(BASH); \
-	fi
-else
-	if ! grep -q $(BASH) $(SHELLS); then \
-		brew install bash bash-completion@2 pcre && \
-		sudo append $(BASH) $(SHELLS) && \
-		chsh -s $(BASH); \
-	fi
-endif
+ohmyzsh:
+	sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 git: brew
 	brew install git git-extras
 
-npm: brew-packages
-	fnm install --lts
-
-ruby: brew
-	brew install ruby
+asdf: brew-packages
+	asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git
+	asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
 
 brew-packages: brew
 	brew bundle --file=$(DOTFILES_DIR)/install/Brewfile || true
