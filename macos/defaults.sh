@@ -38,29 +38,14 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 # sudo scutil --set LocalHostName "$COMPUTER_NAME"
 # sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$COMPUTER_NAME"
 
-###############################################################################
-# Localization                                                                #
-###############################################################################
-
 # Set language and text formats
-defaults write NSGlobalDomain AppleLanguages -array ${LANGUAGES[@]}
-defaults write NSGlobalDomain AppleLocale -string "$LOCALE"
-# defaults write NSGlobalDomain AppleMeasurementUnits -string "$MEASUREMENT_UNITS"
-defaults write NSGlobalDomain AppleMetricUnits -bool true
+# defaults write NSGlobalDomain AppleLanguages -array "en" "nl"
+# defaults write NSGlobalDomain AppleLocale -string "en_US@currency=EUR"
+# defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
+# defaults write NSGlobalDomain AppleMetricUnits -bool true
 
-# Using systemsetup might give Error:-99, can be ignored (commands still work)
-# systemsetup manpage: https://ss64.com/osx/systemsetup.html
-
-# Set the time zone
-sudo defaults write /Library/Preferences/com.apple.timezone.auto Active -bool YES
-sudo systemsetup -setusingnetworktime on
-
-###############################################################################
-# System                                                                      #
-###############################################################################
-
-# Restart automatically if the computer freezes (Error:-99 can be ignored)
-sudo systemsetup -setrestartfreeze on
+# Set the timezone (see `sudo systemsetup -listtimezones` for other values)
+# sudo systemsetup -settimezone "Europe/Amsterdam" > /dev/null
 
 # Set standby delay to 24 hours (default is 1 hour)
 sudo pmset -a standbydelay 86400
@@ -278,18 +263,6 @@ defaults write com.Apple.Dock show-recents -bool false
 
 # Show week numbers (10.8 only)
 defaults write com.apple.iCal "Show Week Numbers" -bool true
-
-###############################################################################
-# Terminal                                                                    #
-###############################################################################
-
-# Only use UTF-8 in Terminal.app
-defaults write com.apple.terminal StringEncodings -array 4
-
-# Appearance
-defaults write com.apple.terminal "Default Window Settings" -string "Pro"
-defaults write com.apple.terminal "Startup Window Settings" -string "Pro"
-defaults write com.apple.Terminal ShowLineMarks -int 0
 
 ###############################################################################
 # Activity Monitor                                                            #
