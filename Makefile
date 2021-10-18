@@ -54,7 +54,11 @@ ohmyzsh:
 git: brew
 	brew install git git-extras
 
-languages: brew-packages nodejs ruby
+languages: brew-packages asdf nodejs ruby
+
+asdf:
+	echo `brew --prefix asdf`
+	source `brew --prefix asdf`/libexec/asdf.sh
 
 nodejs:
 	asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git || true
