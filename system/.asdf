@@ -1,2 +1,2 @@
-export ASDF_DIR="$(brew --prefix asdf)/libexec"
-source $ASDF_DIRasdf.sh
+export ASDF_DIR=$(brew --prefix asdf)/libexec
+source $ASDF_DIR/asdf.sh

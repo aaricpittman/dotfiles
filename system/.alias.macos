@@ -72,9 +72,9 @@ alias pbspaces="pbpaste | expand | pbcopy"
 
 # Overmind
 alias om="overmind"
-alias oms="OVERMIND_ENV=.env.development.local overmind start --procfile Procfile.local.web"
 
-
+# Configuration
+alias dotfiles="nvim ~/.dotfiles"
 alias zshconfig="nvim ~/.zshrc"
 alias ohmyzsh="nvim ~/.oh-my-zsh"
 alias vimconfig="nvim ~/.vimrc"

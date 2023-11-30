@@ -1,5 +1,7 @@
 .DS_Store
 *.lock.json
 __pycache__
+config/nvim/pack/
 system/.custom
 system/.exports
+

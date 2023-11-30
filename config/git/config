@@ -6,8 +6,8 @@
 	user = aaricpittman
 
 [core]
-	excludesfile = ~/.config/git/ignore
-	editor = vim
+	excludesfile = /Users/aaric/.config/git/ignore
+	editor = nvim
 	filemode = false
 	trustctime = false
 	autocrlf = input
@@ -25,7 +25,7 @@
 	defaultBranch = main
 
 [push]
-	default = simple
+	default = current
 	followTags = true
 
 [fetch]
@@ -72,9 +72,11 @@
 	path =
 
 [merge]
-	tool = Kaleidoscope
+	ff = only
+	tool = diffmerge
 	conflictstyle = diff3
 	defaultToUpstream = true
+
 [mergetool]
 	prompt = false
 [mergetool "sourcetree"]
@@ -93,8 +95,8 @@
 	old = red bold
 	new = green bold
 [color "status"]
-	added = yellow
-	changed = green
+	added = green
+	changed = yellow
 	untracked = cyan
 [color "diff-highlight"]
 	oldNormal = red bold
