@@ -1,0 +1,2 @@
+require("nvimfoo")
+print("hello")
